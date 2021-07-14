@@ -12,7 +12,7 @@ module.exports = {
     },
     add: async function(req, res) {
         const results = await model.insert(req.body);
-        console.log(results);
+        // console.log(results);
         res.redirect("/");
     }
 }
