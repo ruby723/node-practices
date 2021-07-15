@@ -58,8 +58,18 @@ module.exports = {
             gender:user.gender
         });
     },
-    _update: async function(req,res){
-        // console.log(req.session.authUser);
+    _update: async function(req,res/*,next*/){
+        // try{
+        //     const updateObject = Object.assign(req.body)
+        //     if(updateObject['passowrd']==''){
+        //         delete updateObject['passowrd'];
+        //     }
+        //     const {password, ...o}=req.body;  // password를 변수로 정의해주고 o 를 나머지 객체로 정의한다.
+        //     o={
+        //         no: req.body.no;
+                
+        //     }
+        // }
         await models.User.update({
             name: req.body.name,
             password: req.body.password,
