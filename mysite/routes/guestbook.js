@@ -2,9 +2,9 @@ const express = require('express');
 const controller = require('../controllers/guestbook');
 
 const router = express.Router();
-router.route('/guestbook').get(controller.index);
-router.route('/guestbook/add').post(controller.add);
-router.route('/guestbook/delete/:no').get(controller.password);
-router.route('/guestbook/delete/:no').post(controller.delete);
+router.route('').get(controller.index);
+router.route('/add').post(controller.add);
+router.route('/delete/:no').get(controller.delete);
+router.route('/delete/:no').post(controller._delete);
 
 module.exports = router;

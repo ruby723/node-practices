@@ -11,7 +11,11 @@ $ npm i ejs
 $ npm i dotenv
 $ npm i sequelize
 $ npm i mysql2
+$ npm i multer
+$ npm i moment
 $ npm i -D nodemon
+$ npm i winston
+$ npm i winston-daily-rotzte-file
 ```
 
 ## 설치된 패키지 삭제
@@ -42,7 +46,12 @@ $ npm i -D nodemon
     |--- package-lock.json
     |--- /node-modules
     |--- /config
+    |--- /login
+    |--- /logs
+    |--- /multer-temporary-store
     |--- /public
+            |--- /assets
+                    |--- gallery
     |--- routes
     |--- /controllers
     |--- /model

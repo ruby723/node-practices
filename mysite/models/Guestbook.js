@@ -1,8 +1,8 @@
-const {Sequelize,DataType, DataTypes} = require('sequelize');
+const {Sequelize, DataTypes} = require('sequelize');
 
 module.exports = function(sequelize){
 
-    return sequelize.define('User',{
+    return sequelize.define('Guestbook',{
         no: {
             field: 'no',
             type: DataTypes.BIGINT(11),
@@ -14,27 +14,27 @@ module.exports = function(sequelize){
             type: DataTypes.STRING(45),
             allowNull: false,
         },
-        passowrd: {
+        password: {
             field : 'password',
             type: DataTypes.STRING(45),
             allowNull: false
         },
         message: {
-            field:'email',
+            
             type: DataTypes.TEXT,
             allowNull : false
         },
         regdate: {
             field:'regdate',
             type:DataTypes.DATE,
-            defaultValue: Sequelize.fn("now"),
+            // defaultValue: Sequelize.fn("now"),
             allowNull : false
         }
     },{
         underscored: true,
         freezeTableName: true,
         timestamps: true,
-        createdAt: false,
+        createdAt: "regdate",
         updatedAt: false,
         tableName: 'guestbook'
     });

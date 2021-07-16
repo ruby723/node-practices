@@ -10,9 +10,9 @@
 		<%- include('../includes/header') %>
 		<div id="content">
 			<div id="guestbook" class="delete-form">
-				<form action="guestbook/delete/<%= no%>" method="post" >
+				<form action="/guestbook/delete/<%= req.params.no %>" method="post" >
 					<label>비밀번호</label>
-					<input type="hidden" name="no" value="<%= no %>">
+					<input type="hidden" name="no" value="<%= req.params.no %>">
 					<input type="password" name="password">
 					<input type="submit" value="확인">
 				</form>
