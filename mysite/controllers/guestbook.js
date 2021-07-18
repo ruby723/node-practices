@@ -46,4 +46,8 @@ module.exports = {
       next(err);
     }
   },
+  spalist: async function(req,res,next){
+
+    res.render("guestbook/spa-landing");
+  }
 };

@@ -15,7 +15,7 @@
 		no = 0;
 	}
 	 $.ajax({
-		url : "/guestbook-api/"+ no,
+		url : "/api/guestbook?no="+no,
 		dataType : "json", // 받을 때 format
 		type : "get", // 요청 method
 		success : function(response) {

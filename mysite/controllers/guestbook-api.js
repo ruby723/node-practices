@@ -1,5 +1,5 @@
 const models = require("../models");
-const Sequelize = require("sequelize");
+const {Op,Sequelize} = require("sequelize");
 
 module.exports = {
     create: async function(req, res, next) {
@@ -16,21 +16,23 @@ module.exports = {
         });
     },
     read: async function(req, res, next) {
-        const startNo = req.query.sno || 0;
+        const startNo = req.query.no || 0;
         console.log(startNo);
         // sql: select.... limit
+        const results = await models.Guestbook.findAll({
+            attributes: ["no", "name","message","regdate"],
+            where: (startNo>0) ? {no:{[Op.lt]:startNo}} : {},
+            order: [["no","desc"]],
+            limit:5,
+
+        })
+        console.log(results);
         res.status(200).send({
             result: 'success',
-            data:[{
-                no: 9,
-                name: '둘리',
-                message: '호이~',
-                regDate: new Date()
-            }],
+            data:results,
             message: null
         });
 
-        res.render("api/guestbook/spa-landing")
     },
     delete: function(req, res, next) {
         console.log(req.params.no + ":" + req.body.password);
