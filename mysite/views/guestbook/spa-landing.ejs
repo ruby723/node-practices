@@ -79,7 +79,8 @@
 		
 			// 데이터 등록
 			$.ajax({
-				url: "/guestbook-api/add",
+				url: "/api/guestbook/add",
+				async: true,
 				dataType: "json",
 				type: "post",
 				contentType: "application/json",   
@@ -125,21 +126,29 @@
 				"삭제": function(){
 					const no = $("#hidden-no").val();
 					const password = $("#password-delete").val();
+
 					$.ajax({
-						url: "/guestbook-api/delete/"+no,
+						url : "/api/guestbook/delete?no="+no,
+						async: true,
 						dataType: "json",
-						type: "post",
+						type: "delete",
 						data: "password=" + password,
 						success : function(response) {
-							if(response.data == -1){
-								// password 틀린 경우
-								$(".validateTips.error").show();
+							if(response.result != "success"){
+									console.error(response.message);
+									return;
+								}
+
+							if(response.data != -1){
+								$("#list-guestbook li[data-no=" + response.data + "]").remove();
+								dialogDelete.dialog('close');
 								return;
-							} 
-							
-							$("#list-guestbook li[data-no=" + response.data + "]").remove();
-							deleteDialog.dialog("close");
-						}
+							}
+							$("#dialog-delete-form p.validateTips.error").show();
+						},
+						error: function(xhr, status, e){
+								console.error(status + ":" + e);
+							}
 			 });
 		},
 				"취소": function(){

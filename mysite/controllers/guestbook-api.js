@@ -3,21 +3,22 @@ const {Op,Sequelize} = require("sequelize");
 
 module.exports = {
     create: async function(req, res, next) {
-        console.log(req.body);
         // sql insert
+        const results = await models.Guestbook.create({
+            no: null,
+            name: req.body.name,
+            password: req.body.password,
+            regDate: new Date(),
+            message: req.body.message
+        })
         res.status(200).send({
             result: 'success',
-            data: Object.assign(req.body, {
-                no: 10,
-                password: '',
-                regDate: new Date()
-            }),
+            data: results,
             message: null
         });
     },
     read: async function(req, res, next) {
         const startNo = req.query.no || 0;
-        console.log(startNo);
         // sql: select.... limit
         const results = await models.Guestbook.findAll({
             attributes: ["no", "name","message","regdate"],
@@ -26,7 +27,6 @@ module.exports = {
             limit:5,
 
         })
-        console.log(results);
         res.status(200).send({
             result: 'success',
             data:results,
@@ -34,12 +34,18 @@ module.exports = {
         });
 
     },
-    delete: function(req, res, next) {
+    delete: async function(req, res, next) {
         console.log(req.params.no + ":" + req.body.password);
         // sql delete
+        const results = await models.Guestbook.destroy({
+            where: {
+              no: req.body.no,
+              password: req.body.password,
+            }
+        })
         res.status(200).send({
             result: 'success',
-            data: req.params.no,
+            data: results,
             message: null
         });
     }
