@@ -15,6 +15,7 @@ const guestbookRouter = require('./routes/guestbook');
 const galleryRouter = require('./routes/gallery');
 const userApiRouter = require('./routes/user-api');
 const guestbookApiRouter = require('./routes/guestbook-api');
+const boardRouter = require('./routes/board');
 const errorRouter = require('./routes/error');
 
 // Logging
@@ -52,6 +53,7 @@ const application = express()
     .use('/gallery', galleryRouter)
     .use('/api/user', userApiRouter)
     .use('/api/guestbook', guestbookApiRouter)
+    .use('/board',boardRouter)
     .use(errorRouter.error404)
     .use(errorRouter.error500);
 

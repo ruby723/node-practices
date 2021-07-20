@@ -35,8 +35,6 @@ module.exports = {
 
     },
     delete: async function(req, res, next) {
-        console.log(req.params.no + ":" + req.body.password);
-        // sql delete
         const results = await models.Guestbook.destroy({
             where: {
               no: req.body.no,
