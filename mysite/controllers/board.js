@@ -13,8 +13,8 @@ module.exports = {
             attributes:["name"],
             // where:{ userno: models.User.no}
         }],
-        order: Sequelize.literal("regdate DESC"),
-        limit:5
+        order: Sequelize.literal("groupno DESC"),
+        // limit:5
       });
       res.render("board/list", { list: results || [] });
     } catch (err) {
@@ -54,7 +54,6 @@ module.exports = {
   },
   add: async function (req, res, next) {
     try {
-        console.log(req.session.authUser.no);
         const group= await models.Board.max('groupno');
       await models.Board.create({
           title: req.body.title,
@@ -78,12 +77,41 @@ module.exports = {
   },
   _modify: async function(req,res,next){
     try{
-        await models.Board.update(req.params,{
+        await models.Board.update({
+          title: req.body.title,
+          contents: req.body.contents
+        },{
             where:{no: req.body.no}
         });
         res.redirect("/board");
     } catch(err){
         next(err);
+    }
+  },
+  comment: async function(req,res,next){
+    try{
+        res.render("board/comment",req.params);
+    } catch(err){
+      next(err);
+    }
+  },
+  _comment: async function(req,res,next){
+    try{
+      const result = await models.Board.findOne({
+        attributes:["no","groupno","orderno","depth"],
+        where:{no:req.body.no}
+      })
+      await models.Board.create({
+        title: req.body.title,
+        contents: req.body.contents,
+        groupno:result.groupno,
+        orderno:result.orderno+1,
+        depth:result.depth+1,
+        userno: req.session.authUser.no
+      });
+      res.redirect("/board")
+    } catch(err){
+      next(err);
     }
   }
 };
